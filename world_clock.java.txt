@@ -1,0 +1,24 @@
+import java.time.*;
+import java.time.format.DateTimeFormatter;
+
+public class WorldClock {
+    public static void main(String[] args) {
+    
+        LocalDateTime utc = LocalDateTime.now(ZoneOffset.UTC);
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+        System.out.println("UTC          : " + utc.format(formatter));
+
+
+        String[] cities  = {"Los Angeles", "New York", "London", "Paris", "Dubai", "India", "Singapore", "Tokyo", "Sydney", "Wellington"};
+        double[] offsets = {-7, -4, 1, 1, 4, 5.5, 8, 9, 10, 12};  
+        
+
+        
+        for (int i = 0; i < cities.length; i++) {
+            int hours = (int) offsets[i];
+            int minutes = (int) ((offsets[i] - hours) * 60); 
+            LocalDateTime cityTime = utc.plusHours(hours).plusMinutes(minutes);
+            System.out.printf("%-12s: %s%n", cities[i], cityTime.format(formatter));
+        }
+    }
+}
